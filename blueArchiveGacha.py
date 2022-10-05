@@ -92,7 +92,6 @@ def summon_sim(num_summons, rate_up, check_limited_banner):
 
             rolls_completed += 1
 
-    print(when_rate_up)
     return when_rate_up
 
 
@@ -109,17 +108,7 @@ def mode_distribution(given_list):
 
     except Exception as e:
         print(e)
-        '''
-            try:
-                total_successes = 0
-                for i in mode:
-                    total_successes += mode[i]
 
-            except Exception as e:
-                print(e)
-
-            print("Average Pull Success: ")
-        '''
     plt.bar(*zip(*sorted(mode.items())))
     plt.show()
 
