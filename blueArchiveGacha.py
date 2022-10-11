@@ -23,8 +23,6 @@ def summon_sim(num_summons, rate_up, check_limited_banner):
 
     rate_up_count = 0
     three_star_count = 0
-    two_star_count = 0
-    one_star_count = 0
 
     rolls_completed = 0
     rate_up_rate = rate_up
@@ -45,8 +43,6 @@ def summon_sim(num_summons, rate_up, check_limited_banner):
                 elif fixed_tenth_roll[0] == "3*":
                     three_star_count += 1
                     when_three_star.append(rolls_completed + 1)
-                elif fixed_tenth_roll[0] == "2*":
-                    two_star_count += 1
             else:
                 if rarity_rolled[0] == "4*":
                     rate_up_count += 1
@@ -55,10 +51,6 @@ def summon_sim(num_summons, rate_up, check_limited_banner):
                 elif rarity_rolled[0] == "3*":
                     three_star_count += 1
                     when_three_star.append(rolls_completed + 1)
-                elif rarity_rolled[0] == "2*":
-                    two_star_count += 1
-                elif rarity_rolled[0] == "1*":
-                    one_star_count += 1
 
             rolls_completed += 1
     else:
@@ -75,8 +67,6 @@ def summon_sim(num_summons, rate_up, check_limited_banner):
                 elif fixed_tenth_roll[0] == "3*":
                     three_star_count += 1
                     when_three_star.append(rolls_completed + 1)
-                elif fixed_tenth_roll[0] == "2*":
-                    two_star_count += 1
             else:
                 if rarity_rolled[0] == "4*":
                     rate_up_count += 1
@@ -85,10 +75,6 @@ def summon_sim(num_summons, rate_up, check_limited_banner):
                 elif rarity_rolled[0] == "3*":
                     three_star_count += 1
                     when_three_star.append(rolls_completed + 1)
-                elif rarity_rolled[0] == "2*":
-                    two_star_count += 1
-                elif rarity_rolled[0] == "1*":
-                    one_star_count += 1
 
             rolls_completed += 1
 

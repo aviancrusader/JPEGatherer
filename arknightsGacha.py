@@ -32,8 +32,6 @@ def summon_sim(num_summons):
 
     six_star_count = 0
     five_star_count = 0
-    four_star_count = 0
-    three_star_count = 0
 
     rolls_completed = 0
     ur_reset = False
@@ -47,14 +45,10 @@ def summon_sim(num_summons):
             default_ur = 2
             when_six_star.append(rolls_completed + 1)
             ur_reset = True
-            #token = False
+            token = False
         elif rarity_rolled[0] == "5*":
             five_star_count += 1
             when_five_star.append(rolls_completed + 1)
-        elif rarity_rolled[0] == "4*":
-            four_star_count += 1
-        elif rarity_rolled[0] == "3*":
-            three_star_count += 1
 
         rolls_completed += 1
         if rolls_completed % 50 == 0:
