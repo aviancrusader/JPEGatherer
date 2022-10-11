@@ -107,11 +107,11 @@ def multi_roll(number_of_rolls, rate_up, check_limited_banner):
     for x in range(summon_length):
         rate_up_positions.append(summon_sim(number_of_rolls, rate_up, check_limited_banner))
 
-    big_strip(rate_up_positions)
+    clean_rate_up_list(rate_up_positions)
 
 
 # removes gacha pulls that don't have a six star, [as in] removes null
-def big_strip(all_pulled):
+def clean_rate_up_list(all_pulled):
     temp = []
 
     for x in all_pulled:

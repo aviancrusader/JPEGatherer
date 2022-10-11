@@ -88,11 +88,11 @@ def multi_roll(number_of_rolls):
     for x in range(summon_length):
         six_star_positions.append(summon_sim(number_of_rolls))
 
-    big_strip(six_star_positions)
+    clean_six_star_list(six_star_positions)
 
 
 # removes gacha pulls that don't have a six star, removes null
-def big_strip(all_pulled):
+def clean_six_star_list(all_pulled):
     temp = []
 
     for x in all_pulled:
