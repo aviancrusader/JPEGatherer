@@ -1,7 +1,6 @@
 from arknightsGacha import *
-from idolyPrideGacha import *
 from blueArchiveGacha import *
-
+from idolyPrideGacha import *
 
 def runner():
     token = False

@@ -57,7 +57,7 @@ def summon_sim(num_summons, check_limited_banner):
 
             rolls_completed += 1
         
-        if(rate_up_count == 0):
+        if(num_summons == 200 and rate_up_count == 0):
             when_rate_up.append(rolls_completed)
     else:
         for i in range(num_summons):
@@ -84,7 +84,7 @@ def summon_sim(num_summons, check_limited_banner):
 
             rolls_completed += 1
         
-        if(rate_up_count == 0):
+        if(num_summons == 200 and rate_up_count == 0):
             when_rate_up.append(rolls_completed)
     
     return when_rate_up

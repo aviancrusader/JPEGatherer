@@ -2,7 +2,6 @@ import math
 import random
 import matplotlib.pyplot as plt
 import collections
-from TenRollStuff import *
 
 
 # 1-(1-p)^n
