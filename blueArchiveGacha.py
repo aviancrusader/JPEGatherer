@@ -56,6 +56,9 @@ def summon_sim(num_summons, check_limited_banner):
                     when_three_star.append(rolls_completed + 1)
 
             rolls_completed += 1
+        
+        if(rate_up_count == 0):
+            when_rate_up.append(rolls_completed)
     else:
         for i in range(num_summons):
             rarity_rolled = random.choices(temp_list, weights=(rate_up, ssr_new_rate, 18.499992, 78.999998))
@@ -80,7 +83,10 @@ def summon_sim(num_summons, check_limited_banner):
                     when_three_star.append(rolls_completed + 1)
 
             rolls_completed += 1
-
+        
+        if(rate_up_count == 0):
+            when_rate_up.append(rolls_completed)
+    
     return when_rate_up
 
 
@@ -106,7 +112,7 @@ def mode_distribution(given_list):
 def multi_roll(number_of_rolls, check_limited_banner):
     rate_up_positions = []
 
-    summon_length = 5000
+    summon_length = 1000
     for x in range(summon_length):
         rate_up_positions.append(summon_sim(number_of_rolls, check_limited_banner))
 
@@ -135,7 +141,7 @@ def blue_archive_main():
             user_input2 = int(input("Enter amount of usable currency: "))
             if type(user_input2) is int:
                 x = archive_roll_count(user_input2)
-                if(x > max_rolls):
+                if(x >= max_rolls):
                     x = max_rolls
                 token = True
         except Exception as e:
@@ -157,6 +163,10 @@ def blue_archive_main():
 
     # .7% is the typical rate up percentage, this will need to be adjusted for the Wakamo limited banner
     y = binomial(swap_to_percent(rate_up), x)
+
+    if(x == max_rolls):
+        y = 100.0
+    
     print("Chance of success, given a .7% chance, within {} rolls: {}".format(x, y))
 
     multi_roll(x, user_input3)
