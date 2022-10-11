@@ -4,6 +4,10 @@ import matplotlib.pyplot as plt
 from arknightsGacha import binomial, swap_to_percent
 
 
+max_rolls = 200
+rate_up = .7
+
+
 def archive_roll_count(currency):
     x = math.floor(currency / 120)
     return x
@@ -15,7 +19,7 @@ def archive_roll_count(currency):
 # gem count 24000
 # 1200 for 10 roll
 # 120 for single roll
-def summon_sim(num_summons, rate_up, check_limited_banner):
+def summon_sim(num_summons, check_limited_banner):
     temp_list = ["4*", "3*", "2*", "1*"]
     fixed_list = ["4*", "3*", "2*"]
     when_three_star = []
@@ -25,16 +29,15 @@ def summon_sim(num_summons, rate_up, check_limited_banner):
     three_star_count = 0
 
     rolls_completed = 0
-    rate_up_rate = rate_up
     ssr_new_rate = 2.5 - rate_up
     wakamo_ssr_rate = 5.0 - rate_up
 
     if check_limited_banner is True:
         for i in range(num_summons):
-            rarity_rolled = random.choices(temp_list, weights=(rate_up_rate, wakamo_ssr_rate, 18.499992, 76.500008))
+            rarity_rolled = random.choices(temp_list, weights=(rate_up, wakamo_ssr_rate, 18.499992, 76.500008))
 
             if rolls_completed % 10 == 0 and rolls_completed != 0:
-                fixed_tenth_roll = random.choices(fixed_list, weights=(rate_up_rate, wakamo_ssr_rate, 95))
+                fixed_tenth_roll = random.choices(fixed_list, weights=(rate_up, wakamo_ssr_rate, 95))
 
                 if fixed_tenth_roll[0] == "4*":
                     rate_up_count += 1
@@ -55,10 +58,10 @@ def summon_sim(num_summons, rate_up, check_limited_banner):
             rolls_completed += 1
     else:
         for i in range(num_summons):
-            rarity_rolled = random.choices(temp_list, weights=(rate_up_rate, ssr_new_rate, 18.499992, 78.999998))
+            rarity_rolled = random.choices(temp_list, weights=(rate_up, ssr_new_rate, 18.499992, 78.999998))
 
             if rolls_completed % 10 == 0 and rolls_completed != 0:
-                fixed_tenth_roll = random.choices(fixed_list, weights=(rate_up_rate, ssr_new_rate, 97.499997))
+                fixed_tenth_roll = random.choices(fixed_list, weights=(rate_up, ssr_new_rate, 97.499997))
 
                 if fixed_tenth_roll[0] == "4*":
                     rate_up_count += 1
@@ -100,17 +103,17 @@ def mode_distribution(given_list):
 
 
 # Only checks rate up unit pulls
-def multi_roll(number_of_rolls, rate_up, check_limited_banner):
+def multi_roll(number_of_rolls, check_limited_banner):
     rate_up_positions = []
 
     summon_length = 5000
     for x in range(summon_length):
-        rate_up_positions.append(summon_sim(number_of_rolls, rate_up, check_limited_banner))
+        rate_up_positions.append(summon_sim(number_of_rolls, check_limited_banner))
 
     clean_rate_up_list(rate_up_positions)
 
 
-# removes gacha pulls that don't have a six star, [as in] removes null
+# removes gacha pulls that don't have a rate up unit, [as in] removes null
 def clean_rate_up_list(all_pulled):
     temp = []
 
@@ -129,19 +132,11 @@ def blue_archive_main():
     token = False
     while token is False:
         try:
-            user_input1 = float(input("Enter the character rate up percent (eg 3.5): "))
-            if type(user_input1) is float:
-                temp = swap_to_percent(user_input1)
-                token = True
-        except:
-            print("Need a float value")
-
-    token = False
-    while token is False:
-        try:
             user_input2 = int(input("Enter amount of usable currency: "))
             if type(user_input2) is int:
                 x = archive_roll_count(user_input2)
+                if(x > max_rolls):
+                    x = max_rolls
                 token = True
         except Exception as e:
             print(e)
@@ -161,7 +156,7 @@ def blue_archive_main():
             print(e)
 
     # .7% is the typical rate up percentage, this will need to be adjusted for the Wakamo limited banner
-    y = binomial(temp, x)
+    y = binomial(swap_to_percent(rate_up), x)
     print("Chance of success, given a .7% chance, within {} rolls: {}".format(x, y))
 
-    multi_roll(x, user_input1, user_input3)
+    multi_roll(x, user_input3)
