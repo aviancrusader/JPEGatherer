@@ -1,9 +1,12 @@
 import unittest
+from gachaSimulators import blueArchiveGacha as ba
 
 
-class MyTestCase(unittest.TestCase):
+
+class blue_archive_tests(unittest.TestCase):
     def test_something(self):
-        self.assertEqual(True, False)  # add assertion here
+        sr = ba.summon_sim(50, False)
+        self.assertIs(sr, list, "A list was not returned! Expected list")  # add assertion here
 
 
 if __name__ == '__main__':

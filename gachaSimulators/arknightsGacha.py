@@ -109,21 +109,12 @@ def arknights_main():
     token = False
     while token is False:
         try:
-            user_input1 = int(input("Chance to roll (as integer, not decimal): "))
-            if type(user_input1) is int:
-                token = True
-        except:
-            print("Need a number chief")
-
-    token = False
-    while token is False:
-        try:
             user_input2 = int(input("Enter amount of usable currency: "))
             if type(user_input2) is int:
                 x = roll_count(user_input2)
                 token = True
         except:
-            print("Need a number chief")
+            print("Invalid currency value")
 
     token = False
     while token is False:
@@ -139,9 +130,9 @@ def arknights_main():
                 token = True
         # the catch-block does run, but nothing is printed (doesn't negatively affect the function)
         except:
-            print("Yes or no, do you have any tickets")
+            print("Invalid Input")
 
-    y = binomial(swap_to_percent(user_input1), x)
-    print("Chance to roll, given a {}% chance, within {} rolls: {}".format(user_input1, x, y))
+    y = binomial(swap_to_percent(2), x)
+    print("Chance to roll, given a {}% chance, within {} rolls: {}".format(2, x, y))
 
     multi_roll(x)
