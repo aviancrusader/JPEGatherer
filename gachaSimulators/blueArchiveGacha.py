@@ -1,7 +1,7 @@
 import random
 import math
 import matplotlib.pyplot as plt
-from arknightsGacha import binomial, swap_to_percent
+from gachaSimulators.arknightsGacha import binomial, swap_to_percent
 
 
 max_rolls = 200
@@ -57,7 +57,7 @@ def summon_sim(num_summons, check_limited_banner):
 
             rolls_completed += 1
         
-        if(num_summons == 200 and rate_up_count == 0):
+        if num_summons == 200 and rate_up_count == 0:
             when_rate_up.append(rolls_completed)
     else:
         for i in range(num_summons):
@@ -84,7 +84,7 @@ def summon_sim(num_summons, check_limited_banner):
 
             rolls_completed += 1
         
-        if(num_summons == 200 and rate_up_count == 0):
+        if num_summons == 200 and rate_up_count == 0:
             when_rate_up.append(rolls_completed)
     
     return when_rate_up
@@ -141,7 +141,7 @@ def blue_archive_main():
             user_input2 = int(input("Enter amount of usable currency: "))
             if type(user_input2) is int:
                 x = archive_roll_count(user_input2)
-                if(x >= max_rolls):
+                if x >= max_rolls:
                     x = max_rolls
                 token = True
         except Exception as e:
@@ -164,7 +164,7 @@ def blue_archive_main():
     # .7% is the typical rate up percentage, this will need to be adjusted for the Wakamo limited banner
     y = binomial(swap_to_percent(rate_up), x)
 
-    if(x == max_rolls):
+    if x == max_rolls:
         y = 100.0
     
     print("Chance of success, given a .7% chance, within {} rolls: {}".format(x, y))
