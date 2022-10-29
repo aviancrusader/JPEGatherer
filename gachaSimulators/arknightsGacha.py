@@ -23,31 +23,31 @@ def swap_to_percent(x):
     return temp
 
 
-def summon_sim(num_summons):
-    temp_list = ["6*", "5*", "4*", "3*"]
-    when_six_star = []
-    when_five_star = []
-    default_ur = 2
+def summon_sim(num_summons, limited_check):
+    base_list = ["6*", "5*", "4*", "3*"]
+    coinflip_six_star = ["limited", "base"]
 
-    six_star_count = 0
-    five_star_count = 0
+    when_limited = []
+    when_six_star = []
+    default_ur = 2
 
     rolls_completed = 0
     ur_reset = False
 
     token = True
     while token:
-        rarity_rolled = random.choices(temp_list, weights=(default_ur, 8, 50, 40))
+        rarity_rolled = random.choices(base_list, weights=(default_ur, 8, 50, 40))
+        if limited_check is True:
+            if rarity_rolled[0] == "6*":
+                limited_unit_check = random.choices(coinflip_six_star, weights=(70, 30))
 
-        if rarity_rolled[0] == "6*":
-            six_star_count += 1
-            default_ur = 2
-            when_six_star.append(rolls_completed + 1)
-            ur_reset = True
-            token = False
-        elif rarity_rolled[0] == "5*":
-            five_star_count += 1
-            when_five_star.append(rolls_completed + 1)
+                if limited_unit_check[0] == "limited":
+                    when_limited.append(rolls_completed + 1)
+                    return when_limited
+        else:
+            if rarity_rolled[0] == "6*":
+                when_six_star.append(rolls_completed + 1)
+                return when_six_star
 
         rolls_completed += 1
         if rolls_completed % 50 == 0:
@@ -79,13 +79,13 @@ def mode_distribution(given_list):
     plt.show()
 
 
-# Only checks six stars
-def multi_roll(number_of_rolls):
+# Only checks six stars/limited units
+def multi_roll(number_of_rolls, check_if_limited):
     six_star_positions = []
 
     summon_length = 7500
     for x in range(summon_length):
-        six_star_positions.append(summon_sim(number_of_rolls))
+        six_star_positions.append(summon_sim(number_of_rolls, check_if_limited))
 
     clean_six_star_list(six_star_positions)
 
@@ -113,8 +113,10 @@ def arknights_main():
             if type(user_input2) is int:
                 x = roll_count(user_input2)
                 token = True
-        except:
-            print("Invalid currency value")
+            else:
+                raise Exception("Invalid currency value")
+        except Exception as e:
+            print(e)
 
     token = False
     while token is False:
@@ -128,11 +130,28 @@ def arknights_main():
             elif user_input3.lower() == "no" or user_input3.lower() == "n":
                 print("Number of rolls possible: " + str(x))
                 token = True
+            else:
+                raise Exception("Invalid Input")
         # the catch-block does run, but nothing is printed (doesn't negatively affect the function)
-        except:
-            print("Invalid Input")
+        except Exception as e:
+            print(e)
+
+    token = False
+    while token is False:
+        user_input5 = input("Is this a limited banner? Y/N: ")
+        try:
+            if user_input5.lower() == "yes" or user_input5.lower() == "y":
+                limited_check = True
+                token = True
+            elif user_input5.lower() == "no" or user_input5.lower() == "n":
+                limited_check = False
+                token = True
+            else:
+                raise Exception("Invalid input")
+        except Exception as e:
+            print(e)
 
     y = binomial(swap_to_percent(2), x)
     print("Chance to roll, given a {}% chance, within {} rolls: {}".format(2, x, y))
 
-    multi_roll(x)
+    multi_roll(x, limited_check)
